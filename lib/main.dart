@@ -50,56 +50,61 @@ class WelcomeBody extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        // 1. Fondo de Pantalla (simulado con un degradado)
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 12, 12, 12),
-                Color.fromARGB(255, 30, 30, 30)
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+        // 1. Fondo de Pantalla (AHORA USA LA IMAGEN DE ASSETS)
+        Image.asset(
+          // ¡IMPORTANTE! Revisa si tu imagen se llama 'fondo_moviezone.jpg'
+          'assets/images/cine.jpg', 
+          fit: BoxFit.cover, // Para que la imagen cubra toda la pantalla
         ),
-        // 2. Contenido Centrado (Logo, Texto y Botones)
+        // 2. Overlay Oscuro (para que el texto sea legible sobre la imagen)
+        Container(
+          color: Colors.black.withOpacity(0.5), // Capa semitransparente
+        ),
+        // 3. Contenido Centrado (Logo, Texto y Botones)
         Center(
           child: Padding(
-            padding: EdgeInsets.all(32.0),
+            padding: const EdgeInsets.all(32.0),
             // Column organiza los elementos verticalmente
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 // Título de la Aplicación
-                Text(
-                  'Bienvenid@ a MovieZone',
+                const Text(
+                  'MovieZone',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 32.0,
+                    fontSize: 52.0,
                     fontWeight: FontWeight.bold,
+                    shadows: [
+                      // La sombra negra hace que el texto resalte
+                      Shadow(
+                        blurRadius: 8.0, // Suavidad de la sombra
+                        color: Colors.black, // Color de la sombra
+                        offset: Offset(3.0, 3.0), // Desplazamiento
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // Imagen/Logo (Usamos un Icono como placeholder de Logo)
-                Icon(
+                const Icon(
                   Icons.local_movies,
                   color: Color(0xFFE50914), // Un color de cine
-                  size: 100.0,
+                  size: 150.0,
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 // Mensaje de Bienvenida
-                Text(
-                  '¡Hey bienvenid@ al mundo del cine!',
+                const Text(
+                  '¡Bienvenid@ al mundo del cine!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white70,
-                    fontSize: 16.0,
+                    fontSize: 22.0,
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 // Botón Ingresa
                 ElevatedButton(
                   onPressed: () {
@@ -110,8 +115,8 @@ class WelcomeBody extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFE50914), // Fondo rojo de botón
-                    padding: EdgeInsets.symmetric(vertical: 15),
+                    backgroundColor: const Color(0xFFE50914), // Fondo rojo de botón
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -124,7 +129,7 @@ class WelcomeBody extends StatelessWidget {
                         color: Colors.white),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 // Botón Regístrate (Usamos un botón Outline para diferenciar)
                 OutlinedButton(
                   onPressed: () {
@@ -135,8 +140,8 @@ class WelcomeBody extends StatelessWidget {
                     );
                   },
                   style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    side: BorderSide(color: Color(0xFFE50914), width: 2), // Borde rojo
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    side: const BorderSide(color: Color(0xFFE50914), width: 2), // Borde rojo
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
-// Este es un widget simple sin estado (StatelessWidget)
-// que sirve como un marcador de posición para la futura
-// pantalla de inicio de sesión y registro.
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold proporciona la estructura básica de la aplicación.
-    return const Scaffold(
+    // Scaffold proporciona la estructura base de la pantalla
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Ingreso y Registro'),
-        backgroundColor: Color(0xFF1976D2), // Color de la barra superior
+        // Título de la pantalla de autenticación
+        title: const Text('Pantalla de Autenticación', style: TextStyle(color: Colors.white)),
+        // Color de fondo oscuro para la barra de navegación
+        backgroundColor: const Color.fromARGB(255, 12, 12, 12),
+        // Ícono de regreso blanco
+        iconTheme: const IconThemeData(color: Colors.white), 
       ),
-      body: Center(
+      // Fondo de pantalla oscuro
+      backgroundColor: const Color.fromARGB(255, 12, 12, 12),
+      body: const Center(
         child: Text(
-          'Aquí irá el formulario de Ingreso/Registro',
-          style: TextStyle(fontSize: 18, color: Colors.blueGrey),
+          // Mensaje temporal para el placeholder
+          'Aquí irá el formulario de Ingreso/Registro (Simple)',
+          style: TextStyle(color: Colors.white70, fontSize: 18),
         ),
       ),
     );
