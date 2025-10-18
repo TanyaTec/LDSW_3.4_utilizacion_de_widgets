@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 // Importa la pantalla de login que debes crear en el archivo login_screen.dart
 import 'package:catalogo_pelis_flutter/login_screen.dart'; 
+// !!! NUEVA IMPORTACIÓN para la demo de API (Pokémon) !!!
+import 'package:catalogo_pelis_flutter/poke_screen.dart'; 
+// La importación de movie_catalog_screen.dart ya no es necesaria aquí.
 
 void main() {
   // Inicia la aplicación en el widget principal (MyApp)
@@ -23,7 +26,8 @@ class MyApp extends StatelessWidget {
         // Define la fuente principal de la app
         fontFamily: 'Inter', 
       ),
-      // El punto de entrada inicial es la pantalla de bienvenida
+      
+      // *** REVERTIDO AL ESTADO ORIGINAL ***
       home: const WelcomeScreen(), 
     );
   }
@@ -50,9 +54,8 @@ class WelcomeBody extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        // 1. Fondo de Pantalla (AHORA USA LA IMAGEN DE ASSETS)
+        // 1. Fondo de Pantalla 
         Image.asset(
-          // ¡IMPORTANTE! Revisa si tu imagen se llama 'fondo_moviezone.jpg'
           'assets/images/cine.jpg', 
           fit: BoxFit.cover, // Para que la imagen cubra toda la pantalla
         ),
@@ -105,7 +108,7 @@ class WelcomeBody extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 50),
-                // Botón Ingresa
+                // Botón Ingresa (Navega a LoginScreen)
                 ElevatedButton(
                   onPressed: () {
                     // Navega a la pantalla de Login/Registro al presionar
@@ -152,6 +155,31 @@ class WelcomeBody extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFFE50914)),
+                  ),
+                ),
+                const SizedBox(height: 15), 
+                // --- NUEVO BOTÓN PARA DEMO API ---
+                OutlinedButton(
+                  onPressed: () {
+                    // Navega a la pantalla de demostración de la API
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PokeScreen()),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    side: const BorderSide(color: Color(0xFF3b4cca), width: 2), // Azul Pokémon
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text(
+                    'Demo API (Pokémon)',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF3b4cca)),
                   ),
                 ),
               ],
