@@ -189,4 +189,4 @@ class _PokeScreenState extends State<PokeScreen> {
       ),
     );
   }
-}r
+}

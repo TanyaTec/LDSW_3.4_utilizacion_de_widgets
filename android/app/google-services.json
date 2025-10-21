@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "939207489719",
+    "project_id": "catalogo-peliculas-android",
+    "storage_bucket": "catalogo-peliculas-android.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939207489719:android:3d3545881fd9e37720f532",
+        "android_client_info": {
+          "package_name": "com.example.catalogo_pelis_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwOjxZIb6wcitaf_5uxYqk1tDISNlqWDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
