@@ -5,8 +5,11 @@ import 'package:catalogo_pelis_flutter/add_movie_screen.dart';
 import 'package:catalogo_pelis_flutter/movie_details_screen.dart';
 import 'package:catalogo_pelis_flutter/background_widget.dart';
 import 'package:catalogo_pelis_flutter/edit_movie_screen.dart';
+import 'package:catalogo_pelis_flutter/movie_search_delegate.dart'; 
 
+// CRÍTICO: Eliminamos 'const' de la clase principal
 class MovieCatalogScreen extends StatelessWidget {
+  // Eliminamos 'const' del constructor para que la clase no sea constante
   const MovieCatalogScreen({super.key});
 
   void _logout(BuildContext context) async {
@@ -79,53 +82,62 @@ class MovieCatalogScreen extends StatelessWidget {
               final movies = snapshot.data!.docs;
               final itemCount = movies.length;
               
-              // --- SOLUCIÓN FINAL: ELIMINAR GESTURE DETECTOR Y USAR FÍSICA ESTABLE ---
-              // Eliminamos el Gesture/NotificationListener para evitar conflictos.
-              return ListView.builder(
-                key: ValueKey(title), // Clave para ayudar a Flutter a rastrear el widget (estabilidad)
-                // PROPIEDADES DE SCROLL SUAVE
-                scrollDirection: Axis.horizontal, 
-                // Usamos ClampingScrollPhysics para una física estable en web.
-                physics: const ClampingScrollPhysics(), 
-                itemCount: itemCount,
-                itemBuilder: (context, index) {
-                  var movieDoc = movies[index % movies.length]; 
-                  var movieData = movieDoc.data() as Map<String, dynamic>;
-                  String title = movieData['title'] ?? 'Sin título';
-                  String imageUrl = movieData['imageUrl'] ?? '';
-                  String movieId = movieDoc.id; 
-
-                  return SizedBox( 
-                    width: 180, 
-                    child: Padding(
-                      // Padding uniforme
-                      padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0), 
-                      child: MovieCard(
-                        title: title,
-                        imageUrl: imageUrl,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MovieDetailsScreen(movieId: movieId),
-                            ),
-                          );
-                        },
-                        onDelete: () => _deleteMovie(context, movieId, title),
-                        onEdit: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditMovieScreen(movieId: movieId),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
+              // Usamos ListView.builder simple con la física más estable para la web
+              return NotificationListener<ScrollNotification>(
+                // Captura el evento de scroll
+                onNotification: (ScrollNotification notification) {
+                  // Si el scroll es horizontal (el carrusel), lo CONSUMIMOS.
+                  if (notification is ScrollUpdateNotification && 
+                      notification.metrics.axis == Axis.horizontal) {
+                    return true; 
+                  }
+                  return false; 
                 },
+                child: ListView.builder(
+                  key: ValueKey(title), 
+                  scrollDirection: Axis.horizontal, 
+                  // Usamos ClampingScrollPhysics para una física estable y contenida
+                  physics: const ClampingScrollPhysics(), 
+                  itemCount: itemCount,
+                  itemBuilder: (context, index) {
+                    var movieDoc = movies[index % movies.length]; 
+                    var movieData = movieDoc.data() as Map<String, dynamic>;
+                    String title = movieData['title'] ?? 'Sin título';
+                    String imageUrl = movieData['imageUrl'] ?? '';
+                    String movieId = movieDoc.id; 
+
+                    return SizedBox( 
+                      width: 180, 
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0), 
+                        child: MovieCard(
+                          title: title,
+                          imageUrl: imageUrl,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                // CRÍTICO: ELIMINAMOS 'const' AQUÍ
+                                builder: (context) => MovieDetailsScreen(movieId: movieId),
+                              ),
+                            );
+                          },
+                          onDelete: () => _deleteMovie(context, movieId, title),
+                          onEdit: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                // CRÍTICO: ELIMINAMOS 'const' AQUÍ
+                                builder: (context) => EditMovieScreen(movieId: movieId),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
               );
-              // --- FIN DEL CAMBIO CRÍTICO ---
             },
           ),
         ),
@@ -149,9 +161,21 @@ class MovieCatalogScreen extends StatelessWidget {
         title: const Text('Catálogo de Películas'),
         backgroundColor: const Color(0xFFE50914),
         actions: [
+          // BOTÓN DE BÚSQUEDA
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context, 
+                delegate: MovieSearchDelegate(),
+              );
+            },
+          ),
+          
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'add_movie') {
+                // CRÍTICO: ELIMINAMOS 'const' AQUÍ
                 Navigator.push(context, MaterialPageRoute(builder: (context) => AddMovieScreen()));
               } else if (value == 'logout') {
                 _logout(context);
@@ -199,6 +223,7 @@ class MovieCard extends StatelessWidget {
   final VoidCallback onDelete;
   final VoidCallback onEdit;
 
+  // CRÍTICO: Eliminamos 'const' del constructor, aunque MovieCard es StatelessWidget
   const MovieCard({
     super.key,
     required this.title,

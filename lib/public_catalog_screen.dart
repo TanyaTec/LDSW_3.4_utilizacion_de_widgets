@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:catalogo_pelis_flutter/movie_details_screen.dart';
 import 'package:catalogo_pelis_flutter/background_widget.dart';
+import 'package:catalogo_pelis_flutter/movie_search_delegate.dart'; // ¡Importación necesaria!
 
 class PublicCatalogScreen extends StatelessWidget {
   const PublicCatalogScreen({super.key});
@@ -37,6 +38,8 @@ class PublicCatalogScreen extends StatelessWidget {
 
               return ListView.builder(
                 scrollDirection: Axis.horizontal, 
+                // Usamos ClampingScrollPhysics para una física estable y contenida
+                physics: const ClampingScrollPhysics(), 
                 itemCount: movies.length,
                 itemBuilder: (context, index) {
                   var movieDoc = movies[index];
@@ -86,7 +89,20 @@ class PublicCatalogScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catálogo Público (Solo Ver)'),
-        backgroundColor: strongBlue, // <--- COLOR CORREGIDO: Azul Fuerte
+        backgroundColor: strongBlue, // Color corregido
+        actions: [
+          // BOTÓN DE BÚSQUEDA (IMPLEMENTACIÓN AQUÍ)
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context, 
+                // Llamamos al delegado de búsqueda que ya funciona
+                delegate: MovieSearchDelegate(),
+              );
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.transparent, 
       body: BackgroundWidget( 

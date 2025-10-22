@@ -26,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late bool _isLoginMode; 
   bool _isLoading = false;
   
-  // CLAVE SECRETA DE ACCESO PARA ADMINISTRADORES
   static const String ADMIN_ACCESS_CODE = '1234'; 
 
   @override
@@ -44,8 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToCatalog() {
+    // CORRECCIÓN: Eliminamos 'const' de MovieCatalogScreen()
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const MovieCatalogScreen()),
+      MaterialPageRoute(builder: (context) => MovieCatalogScreen()),
     );
   }
 
@@ -68,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _navigateToCatalog();
         
       } else {
-        // Lógica de REGISTRO (CON VALIDACIÓN DE CÓDIGO SECRETO)
-        
-        // 1. Validar el Código de Acceso
+        // Lógica de REGISTRO
         if (accessCode != ADMIN_ACCESS_CODE) {
            ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Código de acceso incorrecto.'), backgroundColor: Colors.red),
@@ -79,13 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
            return;
         }
 
-        // 2. Crear el Usuario en Firebase Auth
+        // Crear el Usuario en Firebase Auth
         final userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
         
-        // 3. Guardar el estado de administrador en Firestore
+        // Guardar el estado de administrador en Firestore
         await _firestore.collection('users').doc(userCredential.user!.uid).set({
           'email': email,
-          'isAdmin': true, // Marcar como administrador
+          'isAdmin': true, 
           'createdAt': FieldValue.serverTimestamp(),
         });
         
@@ -119,7 +117,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TÍTULOS CORREGIDOS SEGÚN UX
         title: Text(_isLoginMode ? 'Iniciar Sesión (Admin)' : 'Registro (Date de Alta como Administrador)'),
         backgroundColor: const Color(0xFFE50914),
         elevation: 0,
@@ -143,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
 
-                    // NUEVO CAMPO: Código de Acceso (Solo visible en modo Registro)
+                    // Campo de Código de Acceso (Solo visible en modo Registro)
                     if (!_isLoginMode)
                       TextFormField(
                         controller: _accessCodeController,
@@ -151,7 +148,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: true,
                         decoration: const InputDecoration(
                             labelText: 'Código de Acceso Secreto',
-                            // ELIMINADO: hintText: 'Ingresa 1234'
                         ),
                         validator: (value) {
                           if (!_isLoginMode && (value == null || value.isEmpty)) {

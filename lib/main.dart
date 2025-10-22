@@ -4,7 +4,7 @@ import 'firebase_options.dart';
 
 // Importaciones de Pantallas
 import 'package:catalogo_pelis_flutter/login_screen.dart';
-import 'package:catalogo_pelis_flutter/poke_screen.dart'; // Mantenemos la importación
+import 'package:catalogo_pelis_flutter/poke_screen.dart'; 
 import 'package:catalogo_pelis_flutter/movie_catalog_screen.dart'; 
 import 'package:catalogo_pelis_flutter/public_catalog_screen.dart'; 
 import 'package:catalogo_pelis_flutter/background_widget.dart'; 
@@ -176,23 +176,22 @@ class WelcomeBody extends StatelessWidget {
                   child: const Text('Regístrate', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)), 
                 ),
 
-                /* --- INICIO DEL CÓDIGO OCULTO (DEMO API) ---
-                const SizedBox(height: 15),
-                OutlinedButton(
-                  onPressed: () {
-                    // Mantenemos la lógica de navegación intacta para que la asesora la pueda descomentar
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PokeScreen()));
-                  },
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    side: BorderSide(color: strongBlue, width: 2),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  ),
-                  child: Text('Demo API', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: strongBlue)),
-                ),
-                --- FIN DEL CÓDIGO OCULTO (DEMO API) --- */
+                /* --- CÓDIGO OCULTO (DEMO API) --- */
+                // const SizedBox(height: 15),
+                // OutlinedButton(
+                //   onPressed: () {
+                //     Navigator.push(context, MaterialPageRoute(builder: (context) => const PokeScreen()));
+                //   },
+                //   style: OutlinedButton.styleFrom(
+                //     padding: const EdgeInsets.symmetric(vertical: 15),
+                //     side: BorderSide(color: strongBlue, width: 2),
+                //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                //   ),
+                //   child: Text('Demo API', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: strongBlue)),
+                // ),
+                // /* --- FIN DEL CÓDIGO OCULTO (DEMO API) --- */
                 
-                // --- ÚLTIMA COSA QUE EL USUARIO VE: REDES SOCIALES (FOOTER) ---
+                // --- SECCIÓN DE REDES SOCIALES ---
                 const SizedBox(height: 40), 
                 const Text(
                   'Síguenos',
@@ -219,6 +218,18 @@ class WelcomeBody extends StatelessWidget {
                     ),
                   ],
                 ),
+                
+                // --- FOOTER SOLICITADO (ÚLTIMO ELEMENTO) ---
+                const SizedBox(height: 30), 
+                const Text(
+                  'Desarrollo Web por TanyaTech',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white54, // Color más tenue y discreto
+                  ),
+                ),
+                // --- FIN FOOTER ---
               ],
             ),
           ),
