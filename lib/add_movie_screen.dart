@@ -87,7 +87,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Película guardada exitosamente en Firebase.'),
-            backgroundColor: Colors.green,
+            backgroundColor: Color.fromARGB(255, 20, 100, 150),
           ),
         );
         
